@@ -23,7 +23,7 @@ const HeroSection = ({ onTraceBatch, onBack }: HeroSectionProps) => {
       {/* Content */}
           <div className="relative z-10 container mx-auto px-6 text-center">
             {onBack && (
-              <button onClick={onBack} className="absolute left-6 top-6 bg-white/10 backdrop-blur-sm text-forest-primary hover:text-forest-secondary px-3 py-1 rounded-lg border border-white/20">
+              <button onClick={onBack} className="absolute left-6 top-6 bg-white/10 backdrop-blur-sm text-white hover:text-gray-200 px-3 py-1 rounded-lg border border-white/20">
                 ← Back
               </button>
             )}
