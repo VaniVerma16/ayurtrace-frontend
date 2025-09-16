@@ -197,7 +197,7 @@ const ProvenanceDisplay = ({ batchId, onBack }: ProvenanceDisplayProps) => {
           <div className="w-32" /> {/* Spacer for centering */}
         </div>
 
-        {data.ui.recall_banner && (
+  {data?.ui?.recall_banner && (
           <div className="mb-8 p-4 bg-warning/10 border border-warning rounded-2xl">
             <div className="flex items-center space-x-3">
               <AlertTriangle className="w-6 h-6 text-warning" />
