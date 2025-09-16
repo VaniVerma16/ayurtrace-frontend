@@ -87,18 +87,36 @@ export async function listLabTests(params?: Record<string, string>) {
 }
 
 export async function getProvenance(batchId: string) {
-  const res = await fetch(`${BASE_URL}/provenance/${batchId}`);
+  const res = await fetch(`${BASE_URL}/provenance/${batchId}`, { cache: 'no-store' });
+  // Debug logging to help diagnose empty/304 responses
+  console.log('[API] getProvenance status:', res.status, res.statusText);
+  try {
+    // log some headers
+    console.log('[API] getProvenance headers:', {
+      'content-type': res.headers.get('content-type'),
+      'cache-control': res.headers.get('cache-control'),
+      'etag': res.headers.get('etag'),
+      'last-modified': res.headers.get('last-modified'),
+    });
+  } catch (e) {
+    // ignore header read errors in older browsers
+  }
+
   if (!res.ok) {
     throw new Error(`Server responded with status ${res.status}`);
   }
-  // If 304, no body will be sent, so check for content
+
   const text = await res.text();
+  console.log('[API] getProvenance raw body length:', text?.length ?? 0);
   if (!text) {
     throw new Error('No provenance data returned (empty response)');
   }
   try {
-    return JSON.parse(text);
-  } catch {
+    const parsed = JSON.parse(text);
+    console.log('[API] getProvenance parsed:', parsed);
+    return parsed;
+  } catch (err) {
+    console.error('[API] getProvenance JSON parse error', err, text);
     throw new Error('Invalid JSON response from server');
   }
 }

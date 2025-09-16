@@ -115,10 +115,13 @@ const ProvenanceDisplay = ({ batchId, onBack }: ProvenanceDisplayProps) => {
   };
 
   useEffect(() => {
-    // Trigger fetch when component mounts or when batchId changes
-    if (batchId) {
-      fetchProvenance();
+    // Trigger data fetch when component mounts or batchId changes
+    if (!batchId) {
+      console.log('ProvenanceDisplay: no batchId provided');
+      return;
     }
+    console.log('ProvenanceDisplay: useEffect calling fetchProvenance for', batchId);
+    fetchProvenance();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [batchId]);
 
@@ -179,6 +182,8 @@ const ProvenanceDisplay = ({ batchId, onBack }: ProvenanceDisplayProps) => {
     }
   };
 
+  const dateUtc = data?.batch?.date_utc ?? null;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-earth-light to-background">
       <div className="container mx-auto px-6 py-8">
@@ -214,38 +219,38 @@ const ProvenanceDisplay = ({ batchId, onBack }: ProvenanceDisplayProps) => {
           <CardHeader className="bg-gradient-to-r from-forest-primary to-forest-secondary text-primary-foreground rounded-t-lg">
             <CardTitle className="flex items-center space-x-3">
               <Leaf className="w-6 h-6" />
-              <span>{data.ui.herb_names.scientific}</span>
+              <span>{data?.ui?.herb_names?.scientific ?? ''}</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-8">
             <div className="grid md:grid-cols-5 gap-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-foreground mb-1">
-                  {new Date(data.batch.date_utc).toLocaleDateString()}
+                  {dateUtc ? new Date(dateUtc).toLocaleDateString() : '-'}
                 </div>
                 <div className="text-sm text-muted-foreground">Harvest Date</div>
               </div>
               <div className="text-center">
-                <Badge className={`text-sm ${getStatusColor(data.batch.quality_gate)}`}>{data.batch.quality_gate}</Badge>
+                <Badge className={`text-sm ${getStatusColor(data?.batch?.quality_gate ?? '')}`}>{data?.batch?.quality_gate ?? ''}</Badge>
                 <div className="text-sm text-muted-foreground mt-1">Quality Gate</div>
               </div>
               <div className="text-center">
-                <Badge variant="outline" className="text-sm">{data.batch.status_phase.replace(/_/g, ' ')}</Badge>
+                <Badge variant="outline" className="text-sm">{(data?.batch?.status_phase ?? '').replace(/_/g, ' ')}</Badge>
                 <div className="text-sm text-muted-foreground mt-1">Status</div>
               </div>
               <div className="text-center">
-                <div className="text-sm font-medium text-foreground mb-1">Collector: {data.batch.collector_id_masked}</div>
+                <div className="text-sm font-medium text-foreground mb-1">Collector: {data?.batch?.collector_id_masked ?? ''}</div>
                 <div className="text-sm text-muted-foreground">Anonymized ID</div>
               </div>
               <div className="text-center">
-                {typeof data.ui.herb_names.ai_verified_confidence === 'number' && (
+                {typeof data?.ui?.herb_names?.ai_verified_confidence === 'number' && (
                   <div className="text-sm text-success font-semibold mb-1">
-                    AI Verified: {(data.ui.herb_names.ai_verified_confidence * 100).toFixed(1)}%
+                    AI Verified: {((data?.ui?.herb_names?.ai_verified_confidence ?? 0) * 100).toFixed(1)}%
                   </div>
                 )}
-                {data.batch.hash && (
+                {data?.batch?.hash && (
                   <div className="text-xs text-muted-foreground break-all">
-                    <span className="font-mono">Hash:</span> {data.batch.hash}
+                    <span className="font-mono">Hash:</span> {data?.batch?.hash}
                   </div>
                 )}
               </div>
@@ -263,14 +268,14 @@ const ProvenanceDisplay = ({ batchId, onBack }: ProvenanceDisplayProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {data.collection.map((event, index) => (
+              {(data?.collection || []).map((event, index) => (
                 <div key={index} className="border rounded-lg p-4 bg-earth-warm/30">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center space-x-2">
                       <Eye className="w-4 h-4 text-forest-primary" />
                       <span className="font-medium">Collection Event {index + 1}</span>
                     </div>
-                    <Badge variant="outline" className="text-xs">{new Date(event.timestamp).toLocaleString()}</Badge>
+                    <Badge variant="outline" className="text-xs">{event.timestamp ? new Date(event.timestamp).toLocaleString() : ''}</Badge>
                   </div>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center space-x-2">
@@ -303,7 +308,7 @@ const ProvenanceDisplay = ({ batchId, onBack }: ProvenanceDisplayProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {data.processing_steps.map((step, index) => (
+              {(data?.processing_steps || []).map((step, index) => (
                 <div key={index} className="border rounded-lg p-4 bg-earth-warm/30">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-2">
@@ -329,8 +334,8 @@ const ProvenanceDisplay = ({ batchId, onBack }: ProvenanceDisplayProps) => {
           </Card>
         </div>
 
-        {/* Lab Results */}
-        {data.lab_results.length > 0 && (
+  {/* Lab Results */}
+  {(data?.lab_results?.length ?? 0) > 0 && (
           <Card className="mt-8 shadow-elegant">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
@@ -340,8 +345,8 @@ const ProvenanceDisplay = ({ batchId, onBack }: ProvenanceDisplayProps) => {
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-2 gap-6">
-                {data.lab_results.map((test, index) => (
-                  <div key={index} className="border rounded-lg p-6 bg-gradient-to-br from-background to-earth-warm/20">
+                  {(data?.lab_results || []).map((test, index) => (
+                    <div key={index} className="border rounded-lg p-6 bg-gradient-to-br from-background to-earth-warm/20">
                     <div className="flex items-center justify-between mb-4">
                       <h4 className="font-semibold text-foreground">Test #{index + 1}</h4>
                       <Badge className={`${getStatusColor(test.gate)}`}>{test.gate}</Badge>

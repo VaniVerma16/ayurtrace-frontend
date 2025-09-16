@@ -59,7 +59,7 @@ const Index = () => {
       
       {currentView === 'hero' && (
         <>
-          <HeroSection onTraceBatch={handleTraceBatch} />
+          <HeroSection onTraceBatch={handleTraceBatch} onBack={handleBackToRoleSelect} />
           <BatchLookup onBatchFound={handleBatchFound} />
         </>
       )}

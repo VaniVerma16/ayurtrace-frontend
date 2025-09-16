@@ -4,9 +4,10 @@ import heroImage from "@/assets/hero-herbs.jpg";
 
 interface HeroSectionProps {
   onTraceBatch: () => void;
+  onBack?: () => void;
 }
 
-const HeroSection = ({ onTraceBatch }: HeroSectionProps) => {
+const HeroSection = ({ onTraceBatch, onBack }: HeroSectionProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
@@ -20,7 +21,12 @@ const HeroSection = ({ onTraceBatch }: HeroSectionProps) => {
       </div>
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center">
+          <div className="relative z-10 container mx-auto px-6 text-center">
+            {onBack && (
+              <button onClick={onBack} className="absolute left-6 top-6 text-forest-primary hover:text-forest-secondary">
+                ← Back
+              </button>
+            )}
         <div className="max-w-4xl mx-auto">
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground mb-6 leading-tight">
