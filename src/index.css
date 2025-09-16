@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 35 20% 98%;
+    --foreground: 155 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 155 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 155 20% 15%;
+
+    --primary: 155 35% 25%;
+    --primary-foreground: 35 25% 95%;
+
+    --secondary: 35 15% 92%;
+    --secondary-foreground: 155 20% 20%;
+
+    --muted: 35 10% 96%;
+    --muted-foreground: 155 15% 45%;
+
+    --accent: 40 85% 55%;
+    --accent-foreground: 155 35% 15%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 355 7% 97%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 48 96% 89%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 155 10% 90%;
+    --input: 155 8% 94%;
+    --ring: 155 35% 25%;
+
+    /* AyurTrace Brand Colors */
+    --forest-primary: 155 35% 25%;
+    --forest-secondary: 155 25% 35%;
+    --saffron-primary: 40 85% 55%;
+    --saffron-light: 40 75% 75%;
+    --earth-warm: 35 20% 88%;
+    --earth-light: 35 15% 95%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--forest-primary)), hsl(var(--forest-secondary)));
+    --gradient-accent: linear-gradient(120deg, hsl(var(--saffron-primary)), hsl(var(--saffron-light)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--earth-light)), hsl(var(--background)));
+    
+    /* Shadows */
+    --shadow-elegant: 0 10px 40px -15px hsl(var(--forest-primary) / 0.3);
+    --shadow-warm: 0 4px 20px -8px hsl(var(--saffron-primary) / 0.4);
+    --shadow-soft: 0 2px 15px -5px hsl(var(--foreground) / 0.1);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 155 20% 8%;
+    --foreground: 35 25% 95%;
+
+    --card: 155 15% 10%;
+    --card-foreground: 35 25% 95%;
+
+    --popover: 155 15% 10%;
+    --popover-foreground: 35 25% 95%;
+
+    --primary: 155 35% 75%;
+    --primary-foreground: 155 35% 15%;
+
+    --secondary: 155 10% 15%;
+    --secondary-foreground: 35 25% 90%;
+
+    --muted: 155 8% 12%;
+    --muted-foreground: 155 15% 65%;
+
+    --accent: 40 75% 65%;
+    --accent-foreground: 155 35% 15%;
+
+    --success: 142 76% 46%;
+    --success-foreground: 355 7% 97%;
+
+    --warning: 38 92% 60%;
+    --warning-foreground: 48 96% 89%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 155 10% 20%;
+    --input: 155 8% 18%;
+    --ring: 155 35% 75%;
+
+    --forest-primary: 155 35% 75%;
+    --forest-secondary: 155 25% 65%;
+    --saffron-primary: 40 75% 65%;
+    --saffron-light: 40 65% 75%;
+    --earth-warm: 35 15% 18%;
+    --earth-light: 35 10% 12%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
