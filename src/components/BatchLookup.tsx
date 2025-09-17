@@ -152,9 +152,6 @@ const BatchLookup = ({ onBatchFound }: BatchLookupProps) => {
                       <code className="block text-sm bg-background/60 px-3 py-2 rounded border text-foreground">
                         B-WITHA-20250916-farmer-123
                       </code>
-                      <code className="block text-sm bg-background/60 px-3 py-2 rounded border text-foreground">
-                        B-ASHWA-20250915-collector-456
-                      </code>
                     </div>
                   </div>
                 </div>
